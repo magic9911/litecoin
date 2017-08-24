@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2016 The Bitcoin Core developers
+// Copyright (c) 2014-2015 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -25,14 +25,12 @@ bool DecodeBase58(const char* psz, std::vector<unsigned char>& vch)
         psz++;
     // Skip and count leading '1's.
     int zeroes = 0;
-    int length = 0;
     while (*psz == '1') {
         zeroes++;
         psz++;
     }
     // Allocate enough space in big-endian base256 representation.
-    int size = strlen(psz) * 733 /1000 + 1; // log(58) / log(256), rounded up.
-    std::vector<unsigned char> b256(size);
+    std::vector<unsigned char> b256(strlen(psz) * 733 / 1000 + 1); // log(58) / log(256), rounded up.
     // Process the characters.
     while (*psz && !isspace(*psz)) {
         // Decode base58 character
@@ -41,14 +39,12 @@ bool DecodeBase58(const char* psz, std::vector<unsigned char>& vch)
             return false;
         // Apply "b256 = b256 * 58 + ch".
         int carry = ch - pszBase58;
-        int i = 0;
-        for (std::vector<unsigned char>::reverse_iterator it = b256.rbegin(); (carry != 0 || i < length) && (it != b256.rend()); ++it, ++i) {
+        for (std::vector<unsigned char>::reverse_iterator it = b256.rbegin(); it != b256.rend(); it++) {
             carry += 58 * (*it);
             *it = carry % 256;
             carry /= 256;
         }
         assert(carry == 0);
-        length = i;
         psz++;
     }
     // Skip trailing spaces.
@@ -57,7 +53,7 @@ bool DecodeBase58(const char* psz, std::vector<unsigned char>& vch)
     if (*psz != 0)
         return false;
     // Skip leading zeroes in b256.
-    std::vector<unsigned char>::iterator it = b256.begin() + (size - length);
+    std::vector<unsigned char>::iterator it = b256.begin();
     while (it != b256.end() && *it == 0)
         it++;
     // Copy result into output vector.
@@ -216,18 +212,12 @@ class CBitcoinAddressVisitor : public boost::static_visitor<bool>
 {
 private:
     CBitcoinAddress* addr;
-    CChainParams::Base58Type script_type_;
 
 public:
-    CBitcoinAddressVisitor(CBitcoinAddress* addrIn, CChainParams::Base58Type script_type) 
-      : addr(addrIn), script_type_(script_type) 
-    {
-        assert(script_type == CChainParams::SCRIPT_ADDRESS || 
-               script_type == CChainParams::SCRIPT_ADDRESS2);
-    }
+    CBitcoinAddressVisitor(CBitcoinAddress* addrIn) : addr(addrIn) {}
 
     bool operator()(const CKeyID& id) const { return addr->Set(id); }
-    bool operator()(const CScriptID& id) const { return addr->Set(id, script_type_); }
+    bool operator()(const CScriptID& id) const { return addr->Set(id); }
     bool operator()(const CNoDestination& no) const { return false; }
 };
 
@@ -239,17 +229,15 @@ bool CBitcoinAddress::Set(const CKeyID& id)
     return true;
 }
 
-bool CBitcoinAddress::Set(const CScriptID& id, CChainParams::Base58Type type)
+bool CBitcoinAddress::Set(const CScriptID& id)
 {
-    assert(type == CChainParams::SCRIPT_ADDRESS || type == CChainParams::SCRIPT_ADDRESS2);
-    SetData(Params().Base58Prefix(type), &id, 20);
+    SetData(Params().Base58Prefix(CChainParams::SCRIPT_ADDRESS), &id, 20);
     return true;
 }
 
-bool CBitcoinAddress::Set(const CTxDestination& dest, CChainParams::Base58Type type)
+bool CBitcoinAddress::Set(const CTxDestination& dest)
 {
-    assert(type == CChainParams::SCRIPT_ADDRESS || type == CChainParams::SCRIPT_ADDRESS2);
-    return boost::apply_visitor(CBitcoinAddressVisitor(this, type), dest);
+    return boost::apply_visitor(CBitcoinAddressVisitor(this), dest);
 }
 
 bool CBitcoinAddress::IsValid() const
@@ -261,8 +249,7 @@ bool CBitcoinAddress::IsValid(const CChainParams& params) const
 {
     bool fCorrectSize = vchData.size() == 20;
     bool fKnownVersion = vchVersion == params.Base58Prefix(CChainParams::PUBKEY_ADDRESS) ||
-                         vchVersion == params.Base58Prefix(CChainParams::SCRIPT_ADDRESS) ||
-                         vchVersion == params.Base58Prefix(CChainParams::SCRIPT_ADDRESS2);
+                         vchVersion == params.Base58Prefix(CChainParams::SCRIPT_ADDRESS);
     return fCorrectSize && fKnownVersion;
 }
 
@@ -274,8 +261,7 @@ CTxDestination CBitcoinAddress::Get() const
     memcpy(&id, &vchData[0], 20);
     if (vchVersion == Params().Base58Prefix(CChainParams::PUBKEY_ADDRESS))
         return CKeyID(id);
-    else if (vchVersion == Params().Base58Prefix(CChainParams::SCRIPT_ADDRESS) ||
-             vchVersion == Params().Base58Prefix(CChainParams::SCRIPT_ADDRESS2))
+    else if (vchVersion == Params().Base58Prefix(CChainParams::SCRIPT_ADDRESS))
         return CScriptID(id);
     else
         return CNoDestination();
@@ -293,8 +279,7 @@ bool CBitcoinAddress::GetKeyID(CKeyID& keyID) const
 
 bool CBitcoinAddress::IsScript() const
 {
-    return IsValid() && (vchVersion == Params().Base58Prefix(CChainParams::SCRIPT_ADDRESS) ||
-                         vchVersion == Params().Base58Prefix(CChainParams::SCRIPT_ADDRESS2));
+    return IsValid() && vchVersion == Params().Base58Prefix(CChainParams::SCRIPT_ADDRESS);
 }
 
 void CBitcoinSecret::SetKey(const CKey& vchSecret)

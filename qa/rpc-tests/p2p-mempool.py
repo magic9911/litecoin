@@ -6,6 +6,7 @@
 from test_framework.mininode import *
 from test_framework.test_framework import BitcoinTestFramework
 from test_framework.util import *
+import time
 
 class TestNode(NodeConnCB):
     def __init__(self):
@@ -71,11 +72,8 @@ class TestNode(NodeConnCB):
         self.send_message(msg_mempool())
 
 class P2PMempoolTests(BitcoinTestFramework):
-
-    def __init__(self):
-        super().__init__()
-        self.setup_clean_chain = True
-        self.num_nodes = 2
+    def setup_chain(self):
+        initialize_chain_clean(self.options.tmpdir, 2)
 
     def setup_network(self):
         # Start a node with maxuploadtarget of 200 MB (/24h)

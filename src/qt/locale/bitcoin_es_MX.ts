@@ -249,7 +249,7 @@
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
         <translation>La cartera esta &lt;b&gt;encriptada&lt;/b&gt; y &lt;b&gt;bloqueada&lt;/b&gt; actualmente </translation>
     </message>
-    </context>
+</context>
 <context>
     <name>CoinControlDialog</name>
     <message>
@@ -263,6 +263,10 @@
     <message>
         <source>Amount:</source>
         <translation>Monto:</translation>
+    </message>
+    <message>
+        <source>Priority:</source>
+        <translation>Prioridad:</translation>
     </message>
     <message>
         <source>Fee:</source>
@@ -287,6 +291,10 @@
     <message>
         <source>Confirmed</source>
         <translation>Confirmado </translation>
+    </message>
+    <message>
+        <source>Priority</source>
+        <translation>Prioridad</translation>
     </message>
     </context>
 <context>
@@ -342,13 +350,6 @@
     </message>
     </context>
 <context>
-    <name>ModalOverlay</name>
-    <message>
-        <source>Form</source>
-        <translation>Formulario</translation>
-    </message>
-    </context>
-<context>
     <name>OpenURIDialog</name>
     </context>
 <context>
@@ -389,9 +390,6 @@
         <source>Amount</source>
         <translation>Monto</translation>
     </message>
-    </context>
-<context>
-    <name>QObject::QObject</name>
     </context>
 <context>
     <name>QRImageWidget</name>
@@ -457,6 +455,10 @@
     <message>
         <source>Amount:</source>
         <translation>Monto:</translation>
+    </message>
+    <message>
+        <source>Priority:</source>
+        <translation>Prioridad:</translation>
     </message>
     <message>
         <source>Fee:</source>
@@ -589,11 +591,7 @@
     </context>
 <context>
     <name>WalletModel</name>
-    <message>
-        <source>Send Coins</source>
-        <translation>Enviar monedas</translation>
-    </message>
-</context>
+    </context>
 <context>
     <name>WalletView</name>
     </context>

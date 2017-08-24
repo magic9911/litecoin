@@ -1,4 +1,4 @@
-// Copyright (c) 2011-2016 The Bitcoin Core developers
+// Copyright (c) 2011-2014 The Bitcoin Core developers
 // Distributed under the MIT software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -17,12 +17,14 @@
 #include <boost/foreach.hpp>
 #include <boost/test/unit_test.hpp>
 
-typedef std::vector<unsigned char> valtype;
+using namespace std;
+
+typedef vector<unsigned char> valtype;
 
 BOOST_FIXTURE_TEST_SUITE(multisig_tests, BasicTestingSetup)
 
 CScript
-sign_multisig(CScript scriptPubKey, std::vector<CKey> keys, CTransaction transaction, int whichIn)
+sign_multisig(CScript scriptPubKey, vector<CKey> keys, CTransaction transaction, int whichIn)
 {
     uint256 hash = SignatureHash(scriptPubKey, transaction, whichIn, SIGHASH_ALL, 0, SIGVERSION_BASE);
 
@@ -30,7 +32,7 @@ sign_multisig(CScript scriptPubKey, std::vector<CKey> keys, CTransaction transac
     result << OP_0; // CHECKMULTISIG bug workaround
     BOOST_FOREACH(const CKey &key, keys)
     {
-        std::vector<unsigned char> vchSig;
+        vector<unsigned char> vchSig;
         BOOST_CHECK(key.Sign(hash, vchSig));
         vchSig.push_back((unsigned char)SIGHASH_ALL);
         result << vchSig;
@@ -73,7 +75,7 @@ BOOST_AUTO_TEST_CASE(multisig_verify)
         txTo[i].vout[0].nValue = 1;
     }
 
-    std::vector<CKey> keys;
+    vector<CKey> keys;
     CScript s;
 
     // Test a AND b:
@@ -198,7 +200,7 @@ BOOST_AUTO_TEST_CASE(multisig_Solver1)
     partialkeystore.AddKey(key[0]);
 
     {
-        std::vector<valtype> solutions;
+        vector<valtype> solutions;
         txnouttype whichType;
         CScript s;
         s << ToByteVector(key[0].GetPubKey()) << OP_CHECKSIG;
@@ -211,7 +213,7 @@ BOOST_AUTO_TEST_CASE(multisig_Solver1)
         BOOST_CHECK(!IsMine(emptykeystore, s));
     }
     {
-        std::vector<valtype> solutions;
+        vector<valtype> solutions;
         txnouttype whichType;
         CScript s;
         s << OP_DUP << OP_HASH160 << ToByteVector(key[0].GetPubKey().GetID()) << OP_EQUALVERIFY << OP_CHECKSIG;
@@ -224,7 +226,7 @@ BOOST_AUTO_TEST_CASE(multisig_Solver1)
         BOOST_CHECK(!IsMine(emptykeystore, s));
     }
     {
-        std::vector<valtype> solutions;
+        vector<valtype> solutions;
         txnouttype whichType;
         CScript s;
         s << OP_2 << ToByteVector(key[0].GetPubKey()) << ToByteVector(key[1].GetPubKey()) << OP_2 << OP_CHECKMULTISIG;
@@ -237,13 +239,13 @@ BOOST_AUTO_TEST_CASE(multisig_Solver1)
         BOOST_CHECK(!IsMine(partialkeystore, s));
     }
     {
-        std::vector<valtype> solutions;
+        vector<valtype> solutions;
         txnouttype whichType;
         CScript s;
         s << OP_1 << ToByteVector(key[0].GetPubKey()) << ToByteVector(key[1].GetPubKey()) << OP_2 << OP_CHECKMULTISIG;
         BOOST_CHECK(Solver(s, whichType, solutions));
         BOOST_CHECK_EQUAL(solutions.size(), 4U);
-        std::vector<CTxDestination> addrs;
+        vector<CTxDestination> addrs;
         int nRequired;
         BOOST_CHECK(ExtractDestinations(s, whichType, addrs, nRequired));
         BOOST_CHECK(addrs[0] == keyaddr[0]);
@@ -254,7 +256,7 @@ BOOST_AUTO_TEST_CASE(multisig_Solver1)
         BOOST_CHECK(!IsMine(partialkeystore, s));
     }
     {
-        std::vector<valtype> solutions;
+        vector<valtype> solutions;
         txnouttype whichType;
         CScript s;
         s << OP_2 << ToByteVector(key[0].GetPubKey()) << ToByteVector(key[1].GetPubKey()) << ToByteVector(key[2].GetPubKey()) << OP_3 << OP_CHECKMULTISIG;

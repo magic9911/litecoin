@@ -66,9 +66,6 @@
     <name>Intro</name>
     </context>
 <context>
-    <name>ModalOverlay</name>
-    </context>
-<context>
     <name>OpenURIDialog</name>
     </context>
 <context>
@@ -89,9 +86,6 @@
         <source>Amount</source>
         <translation>Số lượng</translation>
     </message>
-    </context>
-<context>
-    <name>QObject::QObject</name>
     </context>
 <context>
     <name>QRImageWidget</name>

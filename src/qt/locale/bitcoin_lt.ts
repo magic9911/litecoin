@@ -261,7 +261,7 @@
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
         <translation>Piniginė &lt;b&gt;užšifruota&lt;/b&gt; ir šiuo metu &lt;b&gt;užrakinta&lt;/b&gt;</translation>
     </message>
-    </context>
+</context>
 <context>
     <name>CoinControlDialog</name>
     <message>
@@ -279,6 +279,10 @@
     <message>
         <source>Amount:</source>
         <translation>Suma:</translation>
+    </message>
+    <message>
+        <source>Priority:</source>
+        <translation>Pirmumas:</translation>
     </message>
     <message>
         <source>Fee:</source>
@@ -319,6 +323,10 @@
     <message>
         <source>Confirmed</source>
         <translation>Patvirtintas</translation>
+    </message>
+    <message>
+        <source>Priority</source>
+        <translation>Pirmumas</translation>
     </message>
     </context>
 <context>
@@ -371,17 +379,6 @@
     <message>
         <source>Error</source>
         <translation>Klaida</translation>
-    </message>
-    </context>
-<context>
-    <name>ModalOverlay</name>
-    <message>
-        <source>Form</source>
-        <translation>Forma</translation>
-    </message>
-    <message>
-        <source>Last block time</source>
-        <translation>Paskutinio bloko laikas</translation>
     </message>
     </context>
 <context>
@@ -571,9 +568,6 @@
     </message>
     </context>
 <context>
-    <name>QObject::QObject</name>
-    </context>
-<context>
     <name>QRImageWidget</name>
     </context>
 <context>
@@ -741,6 +735,10 @@
     <message>
         <source>Amount:</source>
         <translation>Suma:</translation>
+    </message>
+    <message>
+        <source>Priority:</source>
+        <translation>Pirmumas:</translation>
     </message>
     <message>
         <source>Fee:</source>
@@ -938,6 +936,10 @@
     <message>
         <source>Litecoin Core</source>
         <translation>Litecoin branduolys</translation>
+    </message>
+    <message>
+        <source>Connect only to the specified node(s)</source>
+        <translation>Prisijungti tik prie nurodyto mazgo</translation>
     </message>
     <message>
         <source>Error opening block database</source>

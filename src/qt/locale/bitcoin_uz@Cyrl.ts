@@ -246,6 +246,30 @@
         <translation><numerusform>%n та Litecoin тармоғига фаол уланиш мавжуд</numerusform></translation>
     </message>
     <message>
+        <source>No block source available...</source>
+        <translation>Блок манбалари мавжуд эмас...</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n hour(s)</source>
+        <translation><numerusform>%n соат</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n day(s)</source>
+        <translation><numerusform>%n кун</numerusform></translation>
+    </message>
+    <message numerus="yes">
+        <source>%n week(s)</source>
+        <translation><numerusform>%n ҳафта</numerusform></translation>
+    </message>
+    <message>
+        <source>%1 and %2</source>
+        <translation>%1 ва %2</translation>
+    </message>
+    <message numerus="yes">
+        <source>%n year(s)</source>
+        <translation><numerusform>%n йил</numerusform></translation>
+    </message>
+    <message>
         <source>%1 behind</source>
         <translation>%1 орқада</translation>
     </message>
@@ -293,7 +317,7 @@
         <source>Wallet is &lt;b&gt;encrypted&lt;/b&gt; and currently &lt;b&gt;locked&lt;/b&gt;</source>
         <translation>Ҳамён &lt;b&gt;кодланган&lt;/b&gt; ва вақтинча &lt;b&gt;қулфланган&lt;/b&gt;</translation>
     </message>
-    </context>
+</context>
 <context>
     <name>CoinControlDialog</name>
     <message>
@@ -307,6 +331,10 @@
     <message>
         <source>Amount:</source>
         <translation>Миқдори:</translation>
+    </message>
+    <message>
+        <source>Priority:</source>
+        <translation>Муҳимлиги:</translation>
     </message>
     <message>
         <source>Fee:</source>
@@ -351,6 +379,10 @@
     <message>
         <source>Confirmed</source>
         <translation>Тасдиқланди</translation>
+    </message>
+    <message>
+        <source>Priority</source>
+        <translation>Муҳимлиги</translation>
     </message>
     </context>
 <context>
@@ -443,17 +475,6 @@
     <message>
         <source>Error</source>
         <translation>Хатолик</translation>
-    </message>
-    </context>
-<context>
-    <name>ModalOverlay</name>
-    <message>
-        <source>Form</source>
-        <translation>Шакл</translation>
-    </message>
-    <message>
-        <source>Last block time</source>
-        <translation>Сўнгги блок вақти</translation>
     </message>
     </context>
 <context>
@@ -674,7 +695,11 @@
         <source>User Agent</source>
         <translation>Фойдаланувчи вакил</translation>
     </message>
-    </context>
+    <message>
+        <source>Ping Time</source>
+        <translation>Ping вақти</translation>
+    </message>
+</context>
 <context>
     <name>QObject</name>
     <message>
@@ -705,14 +730,7 @@
         <source>%1 ms</source>
         <translation>%1 мс</translation>
     </message>
-    <message>
-        <source>%1 and %2</source>
-        <translation>%1 ва %2</translation>
-    </message>
-    </context>
-<context>
-    <name>QObject::QObject</name>
-    </context>
+</context>
 <context>
     <name>QRImageWidget</name>
     </context>
@@ -1003,6 +1021,10 @@
         <translation>Миқдори:</translation>
     </message>
     <message>
+        <source>Priority:</source>
+        <translation>Муҳимлиги:</translation>
+    </message>
+    <message>
         <source>Fee:</source>
         <translation>Солиқ:</translation>
     </message>
@@ -1037,6 +1059,10 @@
     <message>
         <source>Recommended:</source>
         <translation>Тавсия этилган</translation>
+    </message>
+    <message>
+        <source>Confirmation time:</source>
+        <translation>Тасдиқ вақти</translation>
     </message>
     <message>
         <source>normal</source>
